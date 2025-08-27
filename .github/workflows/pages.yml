@@ -1,0 +1,49 @@
+name: Build and Publish Activities
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Prepare public folder
+        run: |
+          rm -rf public
+          mkdir -p public/activities
+
+      - name: Build all activities and index
+        run: |
+          npm init -y >/dev/null 2>&1 || true
+          npm pkg set type="module"
+          npm i -D vite >/dev/null 2>&1 || true
+          node tools/build-all.mjs
+          node tools/make-index.mjs
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: public
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
