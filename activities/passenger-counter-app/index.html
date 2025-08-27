@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Passenger Counter</title>
+<link rel="stylesheet" href="index.css" />
+</head>
+<body>
+<div class="app" role="application" aria-labelledby="title">
+<h1 id="title">Passenger count</h1>
+
+
+<div class="counter" aria-live="polite" aria-atomic="true">
+<span id="count-el">0</span>
+</div>
+
+
+<div class="controls">
+<button id="increment-btn" class="btn btn-primary" type="button" aria-keyshortcuts="Space">Increment</button>
+<button id="save-btn" class="btn btn-success" type="button" aria-keyshortcuts="S">Save</button>
+</div>
+
+
+<div class="secondary">
+<button id="reset-btn" class="btn btn-ghost" type="button" aria-keyshortcuts="R">Reset</button>
+<button id="clear-btn" class="btn btn-ghost" type="button">Clear history</button>
+</div>
+
+
+<p class="label">Previous entries</p>
+<div id="entries" class="entries" aria-live="polite"></div>
+
+
+<p class="total"><span id="total-el">Total saved: 0</span></p>
+</div>
+
+
+<script defer src="index.js"></script>
+</body>
+</html>
