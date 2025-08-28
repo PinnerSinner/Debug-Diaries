@@ -14,5 +14,6 @@ The interface uses a single card over a photograph of Pinner station in the UK. 
 - Using CSS gradients, background images and the `backdrop-filter` property to improve readability.
 
 ## Screenshot
+<img width="2430" height="911" alt="image" src="https://github.com/user-attachments/assets/828975a3-da07-407c-b809-5c89f3881cdb" />
 
 ![Passenger Counter App running](station.jpeg)
