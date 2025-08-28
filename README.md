@@ -1,34 +1,45 @@
 # Debug Diaries
 
-Welcome to my museum of coding misadventures. This repo is where I park everything I'm working on — from tiny JavaScript demos to bigger experiments with infrastructure. It's not a polished portfolio; it's a trail of what I've learned and how I've learned it.
+Welcome to my museum of code. This repo is where I stash the experiments, prototypes and misadventures that happen while I'm teaching and learning. It's not a portfolio and it's not polished. It's a trail of what I've tried, what worked and what blew up in my face – and that's the fun of it.
 
-## What you'll find
+## What's inside
 
-- `activities/` — folders for each project or exercise. When I build something new, I drop the source files in a new folder and push. No need to fuss about naming conventions; the build scripts turn folder names into titles automatically.
-- `site/` — the template that powers the public log. It uses a dark cosmic palette inspired by Marcoverse and generates cards for each activity. The cards lift on hover and the tags are colourful pills.
-- `tools/` — the scripts behind the scenes. `build-all.mjs` figures out whether to run a build (if there's a `package.json` with a `build` script) or just copy static files. `make-index.mjs` reads metadata (or derives it) and builds the index page.
+- `activities/` – every project lives in its own folder under here. Drop your HTML, CSS and JS in a subdirectory and push. The build script will figure out whether it needs to run a build (if there's a `package.json` with a `build` script) or just copy the files as they are.
+- `site/` – the public log that you see at [Debug Diaries](https://pinnersinner.github.io/Debug-Diaries/). It uses a dark cosmic palette inspired by my main site and generates cards for each activity. The cards lift when you hover and the tags are colourful pills.
+- `tools/` – the Node scripts that drive the automation. `build-all.mjs` walks through `activities/` and builds or copies each folder into `public/activities/`. `make-index.mjs` reads metadata (or makes it up from the folder names) and writes the index page for the site.
 
-## How it works
+## Pipeline & automation
 
-1. Clone the repo:
+Every push to `main` runs a GitHub Actions workflow defined in `.github/workflows/pages.yml`. It does four things:
+
+1. Checks out the code and installs Node dependencies.
+2. Runs `node tools/build-all.mjs` which either runs `npm run build` in each activity (if there's a `package.json`) or simply copies your files.
+3. Runs `node tools/make-index.mjs` to build a fresh index page, deriving friendly titles from your folder names if you didn't provide a `meta.json`.
+4. Uploads the resulting `public` folder and deploys it with `actions/deploy-pages@v4` to GitHub Pages.
+
+That means you don't need to worry about manual builds or messing with GH Pages settings. Just add a folder, push, and within a few minutes it shows up on the live site.
+
+## Adding your own projects
+
+1. Clone the repository and switch into it.
    ```bash
    git clone https://github.com/PinnerSinner/Debug-Diaries.git
    cd Debug-Diaries
    ```
-2. Add a new project by creating a folder inside `activities/` and dropping in your files. For a static page you just need `index.html`; for a Node/Vite project include a `package.json` with a `build` script.
-3. Commit and push. The GitHub Actions pipeline (`.github/workflows/pages.yml`) will install dependencies, run builds where needed, copy static files, regenerate the index and publish everything to GitHub Pages.
+2. Create a new folder inside `activities/` with a sensible name, e.g. `passenger-counter-app`.
+3. Drop your source files in. For a Vite or React app you'll want a `package.json` with a `build` script that outputs to `dist`. For a static page, just include `index.html` and assets.
+4. Commit and push:
+   ```bash
+   git add activities/passenger-counter-app
+   git commit -m "Add passenger counter app" -m "First stab at counting passengers with JavaScript."
+   git push
+   ```
+That's it. The workflow will take it from there.
 
-Your changes will be live at [pinnersinner.github.io/Debug-Diaries](https://pinnersinner.github.io/Debug-Diaries) within a few minutes.
+## Why this exists
 
-## Pipeline nerd talk
+I'm an instructor based in the UK working with newcomers to tech. We cover everything from basic JavaScript to cloud infrastructure. I wanted a place where I could publish all the exercises and mini-projects I do with my students without worrying about messing up a demo. This repo and its automation pipeline let me turn my classwork into a living museum. You can wander around and see how things change over time.
 
-- The workflow runs on every push to `main`.
-- `build-all.mjs` walks the `activities` tree, running `npm run build` if it finds one, or copying files directly if it doesn't.
-- `make-index.mjs` generates `public/index.html` by injecting a list of all activities into the template in `site/template.html`.
-- The resulting `public` folder is uploaded and deployed via the `actions/deploy-pages@v4` action.
+## Future bits
 
-## Style and mood
-
-I like my projects to look like they belong on Marcoverse: dark backgrounds, bright accents, generous rounded corners and a bit of playful movement. Links are coloured rather than underlined to stand out against the dark canvas. Headings are big, body text is easy on the eyes and cards have a frosted glass effect.
-
-Take a wander through the live site and drop me a note if something's broken. Nothing here is sacred; it's all a work in progress.
+There's a wiki attached to this repo where I'll jot down deeper dives, gotchas and off-the-cuff notes. It's empty for now but watch that space. I also plan to add nicer project thumbnails and maybe a dashboard that lets you filter by language or topic. For now, enjoy the cosmic theme and the occasional joke hidden in the code.
