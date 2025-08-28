@@ -1,4 +1,4 @@
-/* High-contrast refresh. Place this alongside index.html, index.js, and station.jpg */
+/* High-contrast refresh. Place this alongside index.html, index.js, and station.jpeg */
 
 * { box-sizing: border-box; }
 
@@ -17,7 +17,7 @@ body{
   display: grid;
   place-items: center;
   /* Darken the background photo for legibility */
-  background: linear-gradient(rgb(0 0 0 / 0.55), rgb(0 0 0 / 0.55)), url("station.jpg");
+  background: linear-gradient(rgb(0 0 0 / 0.55), rgb(0 0 0 / 0.55)), url("station.jpeg");
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -34,6 +34,7 @@ body{
   padding: 30px 24px;
   background: var(--card-bg);
   border-radius: 18px;
+      backdrop-filter: blur(6px);
   border: 1px solid rgb(0 0 0 / 0.06);
   box-shadow: 0 18px 40px rgb(0 0 0 / 0.25);
 }
@@ -114,5 +115,5 @@ h1{ margin: 0 0 8px; font-size: clamp(22px, 3.4vw, 30px); letter-spacing: .2px; 
 @media (prefers-contrast: more){
   :root{ --card-bg: #fff; }
   .btn-ghost{ background: #fff; }
-  body{ background: linear-gradient(rgb(0 0 0 / 0.7), rgb(0 0 0 / 0.7)), url("station.jpg"); }
+  body{ background: linear-gradient(rgb(0 0 0 / 0.7), rgb(0 0 0 / 0.7)), url("station.jpeg"); }
 }
