@@ -4,87 +4,114 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Debug Diaries</title>
 <style>
-  :root {
-    --bg: #f7f8fa;
-    --card-bg: #ffffff;
-    --card-border: #d0d7de;
-    --card-radius: 16px;
-    --card-shadow: rgba(0,0,0,0.05) 0 2px 4px;
-    --primary: #0050b3;
-    --secondary: #8e44ad;
-  }
-  body {
-    font-family: system-ui, Segoe UI, Roboto, Ubuntu, Arial, sans-serif;
-    background: var(--bg);
-    max-width: 960px;
-    margin: 2rem auto;
-    padding: 0 1rem;
-    line-height: 1.5;
-    color: #333;
-  }
-  header {
-    margin-bottom: 1.5rem;
-    text-align: center;
-  }
-  h1 {
-    font-size: 2.25rem;
-    font-weight: 700;
-    margin: 0;
-    color: var(--primary);
-  }
-  header p {
-    font-size: 1rem;
-    color: #555;
-    margin-top: .5rem;
-  }
-  .filters {
-    margin: .5rem 0 1rem;
-    text-align: center;
-  }
-  ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: grid;
-    gap: 1rem;
-  }
-  li {
-    background: var(--card-bg);
-    border: 1px solid var(--card-border);
-    border-radius: var(--card-radius);
-    padding: 1rem;
-    box-shadow: var(--card-shadow);
-  }
-  a.title {
-    font-weight: 600;
-    font-size: 1.1rem;
-    text-decoration: none;
-    color: var(--primary);
-  }
-  a.title:hover {
-    text-decoration: underline;
-  }
-  .meta {
-    display: block;
-    color: #666;
-    font-size: .85rem;
-    margin-top: .25rem;
-  }
-  a.scrimba {
-    font-size: .8rem;
-    display: inline-block;
-    margin-top: .5rem;
-    color: var(--secondary);
-  }
+:root {
+  /* base colours inspired by Marcoverse */
+  --bg-top: #0c0c1e;
+  --bg-bottom: #020217;
+  --bg-stars: radial-gradient(circle at 20% 30%, rgba(255,255,255,0.05), rgba(255,255,255,0) 50%), radial-gradient(circle at 80% 70%, rgba(255,255,255,0.04), rgba(255,255,255,0) 40%);
+  --primary: #ff7f2e;
+  --secondary: #39c0ed;
+  --text-light: #e2e8f0;
+  --text-muted: #8fa2ce;
+  --card-bg: rgba(22,26,43,0.9);
+  --card-border: #2d3358;
+  --card-shadow: rgba(0,0,0,0.6) 0 8px 16px;
+}
+body {
+  margin: 0;
+  font-family: system-ui, Segoe UI, Roboto, Ubuntu, Arial, sans-serif;
+  background: var(--bg-stars), linear-gradient(to bottom, var(--bg-top), var(--bg-bottom));
+  color: var(--text-light);
+  min-height: 100vh;
+}
+header {
+  text-align: center;
+  padding: 3rem 1rem 2rem;
+}
+header h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--primary);
+}
+header p {
+  margin-top: 1rem;
+  font-size: 1.25rem;
+  color: var(--text-muted);
+}
+main {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1rem 4rem;
+}
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+li {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 18px;
+  box-shadow: var(--card-shadow);
+  padding: 1.5rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  display: flex;
+  flex-direction: column;
+}
+li:hover {
+  transform: translateY(-6px);
+  box-shadow: rgba(0,0,0,0.75) 0 12px 24px;
+}
+li a.title {
+  color: var(--primary);
+  font-size: 1.35rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+li .meta {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+}
+li .tags {
+  margin-top: auto;
+  padding-top: 0.75rem;
+}
+li .tag {
+  display: inline-block;
+  background: var(--secondary);
+  color: var(--bg-top);
+  border-radius: 12px;
+  padding: 0.3rem 0.8rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+footer {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
 </style>
+</head>
+<body>
 <header>
   <h1>Debug Diaries</h1>
-  <p>Misadventures in code: learning by doing, with a smile.</p>
+  <p>A museum of my coding adventures and misadventures.</p>
 </header>
-<div class="filters">
-  <!-- future: quick search by tag or course -->
-</div>
-<ul>
-<!--LIST-->
-</ul>
+<main>
+  <ul>
+    <!--LIST-->
+  </ul>
+</main>
+<footer>
+  <p>&copy; 2025 Marcoverse</p>
+</footer>
+</body>
 </html>
