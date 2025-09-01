@@ -4,167 +4,158 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Debug Diaries</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <!-- Use Orbitron for the brand name, Inter for body, and Roboto for tags -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Orbitron:wght@600;800&family=Roboto:wght@500;700&display=swap" rel="stylesheet" />
   <style>
-    /*
-      This template powers the Debug Diaries landing page.  It uses a darker,
-      cooler cosmic palette and interactive touches inspired by your main site.
-      Colours and sizes are defined as CSS variables for easy tweaking.
-    */
     :root {
-      --bg-top: #0b1f3a;      /* deep navy for top of gradient */
-      --bg-bottom: #021b33;   /* almost black for bottom of gradient */
-      --bg-stars: radial-gradient(ellipse at bottom left, rgba(255,255,255,0.05), transparent 70%),
-                  radial-gradient(circle at top right, rgba(255,255,255,0.05), transparent 70%);
+      /* Dark cool palette inspired by cosmic night skies */
+      --bg-top: #08172d;
+      --bg-bottom: #020c1b;
+      --bg-stars: radial-gradient(1000px 600px at 5% 5%, rgba(255,255,255,0.12) 0%, transparent 60%),
+        radial-gradient(800px 400px at 95% 95%, rgba(255,255,255,0.08) 0%, transparent 60%);
       --primary: #ff8c5a;     /* warm orange accent */
-      --secondary: #5fa8d3;   /* cool aqua accent */
-      --text-light: #e5eef7;  /* light text for high contrast */
-      --text-muted: #9bb2c9;  /* muted text for subtitles */
-      --card-shadow: rgba(0,0,0,0.6) 0 14px 32px; /* deeper shadow for cards */
-      --card-bg: #0f2347;     /* dark blue card background */
-      --card-border: #243e6f; /* subtle border for cards */
+      --secondary: #5da8ff;   /* cool blue accent */
+      --text-light: #d9e7fa;
+      --text-muted: #8ea4c9;
+      --card-shadow: rgba(0,0,0,0.45) 0 12px 28px;
+      --card-bg: #0d2949;
+      --card-border: #1e3a5c;
     }
 
-    html, body {
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    body {
       margin: 0;
       padding: 0;
-      height: 100%;
-      font-family: "Inter", "Roboto", system-ui, sans-serif;
-      background:
-        linear-gradient(to bottom, var(--bg-top), var(--bg-bottom)),
-        var(--bg-stars);
+      font-family: Inter, sans-serif;
+      background: var(--bg-top);
+      background-image: linear-gradient(to bottom, var(--bg-top), var(--bg-bottom)), var(--bg-stars);
       color: var(--text-light);
-      min-height: 100%;
     }
 
     header {
       text-align: center;
-      padding: 2.5rem 1rem 1.5rem;
+      padding: 2rem 1rem 1rem;
     }
-
     header h1 {
+      font-family: Orbitron, sans-serif;
+      font-size: 2.4rem;
       margin: 0;
-      font-size: 2.5rem;
-      font-weight: 700;
       color: var(--primary);
-    }
-
-    main {
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 1rem 2rem 4rem;
     }
 
     ul {
       list-style: none;
       margin: 0;
-      padding: 0;
+      padding: 0 1rem 3rem;
       display: grid;
-      gap: 2rem;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.5rem;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
     }
 
     li {
+      position: relative;
+      overflow: hidden;
       background: var(--card-bg);
       border: 1px solid var(--card-border);
       border-radius: 1rem;
-      padding: 1.5rem;
       box-shadow: var(--card-shadow);
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      transition: transform 0.35s ease, box-shadow 0.35s ease;
+      padding: 1.5rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
-
-    /* 3D tilt effect on hover */
+    /* 3D tilt on hover */
     li:hover {
-      transform: perspective(800px) rotateX(4deg) rotateY(-4deg) scale(1.03);
-      box-shadow: rgba(0,0,0,0.7) 0 18px 40px;
+      transform: perspective(1000px) rotateY(5deg) rotateX(-3deg) scale(1.04);
+      box-shadow: 0 16px 32px rgba(0,0,0,0.5);
     }
 
-    /* Carousel emphasised card state */
-    li.active {
-      transform: perspective(800px) rotateX(3deg) rotateY(-3deg) scale(1.08);
-      box-shadow: rgba(0,0,0,0.85) 0 20px 48px;
-    }
-
-    li h3 {
-      margin: 0 0 0.5rem;
-      font-size: 1.5rem;
-      color: var(--primary);
-    }
-
-    li .meta {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      margin-bottom: 0.75rem;
-    }
-
-    li .tags {
-      margin-top: auto;
-      padding-top: 0.75rem;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-    }
-
-    li .tag {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0.4rem 0.8rem;
-      font-family: "Roboto", sans-serif;
-      font-size: 0.8rem;
-      color: var(--bg-bottom);
-      background: var(--secondary);
-      border-radius: 999px;
-    }
-
-    /* Overlay pseudo-elements for hover preview */
+    /* dark overlay and peek text on hover */
     li::before,
     li::after {
       position: absolute;
       inset: 0;
-      opacity: 0;
       pointer-events: none;
-      transition: opacity 0.35s ease;
+      opacity: 0;
+      transition: opacity 0.4s ease;
     }
-
     li:hover::before {
       content: "";
-      background: rgba(0, 0, 0, 0.45);
+      background: rgba(0, 0, 0, 0.4);
       opacity: 1;
     }
-
     li:hover::after {
       content: "Take a peek";
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      text-align: center;
-      font-family: "Roboto", sans-serif;
-      font-size: 1.1rem;
-      color: var(--secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: Roboto, sans-serif;
+      font-size: 1rem;
       font-weight: 600;
+      color: var(--secondary);
       opacity: 1;
     }
 
-    /* Make entire card clickable by expanding the anchor */
+    /* Title and meta text */
+    .title {
+      font-family: Orbitron, sans-serif;
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--primary);
+      margin-bottom: 0.25rem;
+    }
+    .meta {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      margin-bottom: 0.75rem;
+    }
+
+    /* Tag chips */
+    .tags {
+      margin-top: 1rem;
+    }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.35rem 0.8rem;
+      background: var(--secondary);
+      color: var(--bg-bottom);
+      border-radius: 9999px;
+      font-family: Roboto, sans-serif;
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-right: 0.5rem;
+      text-decoration: none;
+    }
+
+    /* Make the whole card clickable by placing anchor over it */
     li > a {
       position: absolute;
-      inset: 0;
-      padding: 1.5rem;
-      display: flex;
-      flex-direction: column;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
       text-decoration: none;
       color: inherit;
       z-index: 2;
     }
+    /* Keep links unstyled within card (so anchor doesn't show default blue color) */
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
 
-    /* Responsive adjustments */
-    @media (max-width: 680px) {
-      header h1 { font-size: 2.25rem; }
-      li h3 { font-size: 1.3rem; }
+    /* Active card emphasised by carousel script */
+    li.active {
+      transform: perspective(1000px) rotateY(0deg) rotateX(0deg) scale(1.06);
+      box-shadow: 0 20px 36px rgba(0, 0, 0, 0.6);
     }
   </style>
 </head>
@@ -172,30 +163,21 @@
   <header>
     <h1>Debug Diaries</h1>
   </header>
-  <main>
-    <ul>
-      <!--LIST-->
-    </ul>
-  </main>
+  <ul>
+    <!--LIST-->
+  </ul>
   <script>
-    // Rotate emphasis through the cards: give the active class to each card in turn
-    window.addEventListener('DOMContentLoaded', () => {
-      const cards = document.querySelectorAll('ul li');
-      let idx = 0;
-      function cycle() {
-        if (!cards.length) return;
-        cards.forEach((card, i) => {
-          if (i === idx) {
-            card.classList.add('active');
-          } else {
-            card.classList.remove('active');
-          }
-        });
-        idx = (idx + 1) % cards.length;
-      }
-      cycle();
-      setInterval(cycle, 5000);
-    });
+  // Rotate active class among project cards every 5 seconds
+  (function() {
+    const list = document.querySelectorAll('ul li');
+    if (!list || list.length === 0) return;
+    let idx = 0;
+    setInterval(() => {
+      list.forEach(item => item.classList.remove('active'));
+      list[idx].classList.add('active');
+      idx = (idx + 1) % list.length;
+    }, 5000);
+  })();
   </script>
 </body>
 </html>
