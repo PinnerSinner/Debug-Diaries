@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Basketball Scoreboard</title>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="wrap">
+    <header class="header">
+      <h1>Basketball Scoreboard</h1>
+      <p class="tagline">Keep track of those buckets and have a bit of fun while you're at it.</p>
+    </header>
+    <div class="scoreboard">
+      <div class="team home">
+        <h2>Home</h2>
+        <div id="home-score" class="score">0</div>
+        <div class="controls">
+          <button data-team="home" data-points="1">+1</button>
+          <button data-team="home" data-points="2">+2</button>
+          <button data-team="home" data-points="3">+3</button>
+        </div>
+      </div>
+      <div class="team guest">
+        <h2>Guest</h2>
+        <div id="guest-score" class="score">0</div>
+        <div class="controls">
+          <button data-team="guest" data-points="1">+1</button>
+          <button data-team="guest" data-points="2">+2</button>
+          <button data-team="guest" data-points="3">+3</button>
+        </div>
+      </div>
+    </div>
+    <div class="extras">
+      <button id="new-game" class="new-game">New Game</button>
+    </div>
+    <audio id="airhorn" src="https://www.myinstants.com/media/sounds/airhorn.mp3" preload="auto"></audio>
+    <audio id="cheer" src="https://actions.google.com/sounds/v1/crowds/cheer.ogg" preload="auto"></audio>
+  </main>
+  <script src="script.js"></script>
+</body>
+</html>
