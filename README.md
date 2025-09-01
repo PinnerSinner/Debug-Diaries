@@ -1,6 +1,6 @@
 # Debug Diaries
 
-Welcome to my museum of code. This repo is where I stash the experiments, prototypes and misadventures that happen while I'm teaching and learning. It's not a portfolio and it's not polished. It's a trail of what I've tried, what worked and what blew up in my face – and that's the fun of it.
+Welcome to my museum of code. This repo is where I stash the experiments, prototypes and misadventures that happen while I'm teaching and learning. It's not a portfolio and it's not polished. It's a trail of what I've tried, what worked and what blew up in my face.
 
 ## What's inside
 
