@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Debug Diaries</title>
+  <style>
+    /* Root colour palette for a cooler, darker cosmic theme */
+    :root {
+      --bg-top: #11214d;         /* deep indigo for top gradient */
+      --bg-bottom: #06172d;      /* near-black navy for bottom gradient */
+      --bg-stars: radial-gradient(ellipse at bottom left, rgba(255,255,255,0.07), transparent 70%),
+                  radial-gradient(circle at top right, rgba(255,255,255,0.07), transparent 70%);
+      --primary: #7f5af0;        /* violet accent */
+      --secondary: #5ddcff;      /* aqua accent for tags and overlays */
+      --text-light: #e4eaf7;     /* light text colour */
+      --text-muted: #9fb3d3;     /* muted text colour */
+      --card-shadow: rgba(0,0,0,0.4) 0 10px 30px; /* shadow for cards */
+      --card-bg: #131f3a;        /* card background */
+      --card-border: #243a6b;    /* subtle card border */
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      font-family: "Inter", "Roboto", system-ui, sans-serif;
+      background: linear-gradient(to bottom, var(--bg-top), var(--bg-bottom)), var(--bg-stars);
+      color: var(--text-light);
+      min-height: 100%;
+    }
+
+    header {
+      text-align: center;
+      padding: 3rem 1rem 2rem;
+    }
+    header h1 {
+      margin: 0;
+      font-size: 2.6rem;
+      letter-spacing: 0.03em;
+      color: var(--secondary);
+    }
+
+    main {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 1rem 3rem;
+    }
+
+    ul {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 2rem;
+      padding: 0;
+      margin: 0;
+    }
+    li {
+      position: relative;
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      border-radius: 1rem;
+      padding: 1.5rem;
+      box-shadow: var(--card-shadow);
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+      overflow: hidden;
+    }
+    /* Card tilt and shadow on hover */
+    li:hover {
+      transform: perspective(800px) rotateX(3deg) rotateY(-4deg) scale(1.05);
+      box-shadow: rgba(0,0,0,0.7) 0 14px 32px;
+    }
+
+    /* Overlay hint on hover */
+    li::before,
+    li::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+    }
+    li::before {
+      background: rgba(0, 0, 0, 0.4);
+    }
+    li::after {
+      content: "Take a peek";
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Roboto", sans-serif;
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: var(--secondary);
+      text-align: center;
+    }
+    li:hover::before,
+    li:hover::after {
+      opacity: 1;
+    }
+
+    /* Make the whole card clickable via anchor */
+    li > a {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      text-decoration: none;
+      color: inherit;
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .title {
+      font-size: 1.4rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--primary);
+    }
+    .meta {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+    /* Pill tags */
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+    .tag {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.3rem 0.6rem;
+      background: var(--secondary);
+      color: var(--bg-bottom);
+      font-family: "Roboto", sans-serif;
+      font-size: 0.75rem;
+      font-weight: 500;
+      border-radius: 999px;
+    }
+
+    /* Carousel highlight: emphasise one card at a time */
+    .active {
+      transform: perspective(800px) rotateX(0deg) rotateY(0deg) scale(1.07) !important;
+      box-shadow: rgba(0,0,0,0.8) 0 18px 40px !important;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Debug Diaries</h1>
+  </header>
+  <main>
+    <ul id="projects-list">
+      <!-- Project entries will be injected by static index generator. Each li contains an anchor, title, meta, and tags. -->
+      {{PROJECT_ENTRIES}}
+    </ul>
+  </main>
+
+  <script>
+    // Carousel-like rotation script to cycle active class across cards
+    (function() {
+      const cards = document.querySelectorAll('#projects-list li');
+      let index = 0;
+      if (cards.length === 0) return;
+      // Add initial active class
+      cards[0].classList.add('active');
+      setInterval(() => {
+        cards[index].classList.remove('active');
+        index = (index + 1) % cards.length;
+        cards[index].classList.add('active');
+      }, 5000); // rotate every 5 seconds
+    })();
+  </script>
+</body>
+</html>
