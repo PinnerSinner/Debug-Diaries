@@ -1,0 +1,110 @@
+/* Basketball Scoreboard styles */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', sans-serif;
+  background: linear-gradient(135deg, #0D1B2A, #1B263B);
+  color: #E5E5E5;
+}
+
+.wrap {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 30px 20px;
+  text-align: center;
+}
+
+.header h1 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 36px;
+  margin: 0;
+}
+
+.header .tagline {
+  margin: 8px 0 20px;
+  opacity: 0.9;
+}
+
+.scoreboard {
+  display: flex;
+  justify-content: space-between;
+  background: #14213D;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+  gap: 20px;
+}
+
+.team {
+  flex: 1;
+}
+
+.team h2 {
+  margin-bottom: 10px;
+  font-size: 24px;
+  font-family: 'Orbitron', sans-serif;
+}
+
+.score {
+  font-family: 'Orbitron', monospace;
+  font-size: 72px;
+  color: #FF4D6D;
+  background: #010409;
+  padding: 20px 30px;
+  border-radius: 12px;
+  margin-bottom: 15px;
+  box-shadow: inset 0 -4px 10px rgba(0,0,0,0.6), inset 0 2px 0 rgba(255,255,255,0.05);
+  transition: transform 0.15s ease, color 0.2s ease, filter 0.2s ease;
+}
+
+.leader {
+  color: #06D6A0;
+  filter: drop-shadow(0 0 4px #06D6A0);
+  transform: scale(1.05);
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.controls button {
+  font-size: 1.1rem;
+  padding: 10px 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background: #FCA311;
+  color: #000;
+  transition: transform 0.1s ease, background 0.2s ease;
+}
+
+.controls button:hover {
+  transform: translateY(-2px);
+  background: #FFBA08;
+}
+
+.controls button:active {
+  transform: translateY(1px);
+}
+
+.extras {
+  margin-top: 20px;
+}
+
+.new-game {
+  padding: 12px 20px;
+  font-size: 1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 10px;
+  background: #06D6A0;
+  color: #003;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.new-game:hover {
+  background: #4CD6B4;
+}
