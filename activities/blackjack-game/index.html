@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Marcoverse Blackjack</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="brandbar">
+      <div class="brand"><span class="logo">☁</span><strong>Marcoverse</strong> Blackjack</div>
+      <nav class="actions">
+        <button id="btn-howto" class="btn ghost" title="How to play">How to play</button>
+        <button id="btn-sound" class="btn ghost" title="Toggle sound">🔊</button>
+        <button id="btn-theme" class="btn ghost" title="Toggle theme">🌙</button>
+      </nav>
+    </header>
+
+    <main class="table">
+      <section class="hud">
+        <div class="panel chips"><span>Chips</span><strong id="chips">$1,000</strong></div>
+        <div class="panel bet"><span>Bet</span><strong id="bet">$0</strong></div>
+        <div class="panel result"><span>Status</span><strong id="status">Place your bet</strong></div>
+        <div class="panel stats"><span>Stats</span><strong id="stats">W 0 • L 0 • P 0</strong></div>
+      </section>
+
+      <section class="felt">
+        <div class="hand dealer">
+          <div class="label">Dealer</div>
+          <div id="dealer-cards" class="cards"></div>
+          <div id="dealer-sum" class="total">0</div>
+        </div>
+
+        <div class="controls betting" id="betting-controls">
+          <div class="chip-row">
+            <button class="chip" data-chip="10">$10</button>
+            <button class="chip" data-chip="25">$25</button>
+            <button class="chip" data-chip="50">$50</button>
+            <button class="chip" data-chip="100">$100</button>
+            <button class="chip" data-chip="500">$500</button>
+          </div>
+          <div class="bet-row">
+            <button id="btn-clearbet" class="btn">Clear</button>
+            <button id="btn-deal" class="btn primary">Deal</button>
+          </div>
+        </div>
+
+        <div class="hand player">
+          <div class="label">You</div>
+          <div id="player-cards" class="cards"></div>
+          <div id="player-sum" class="total">0</div>
+        </div>
+
+        <div class="controls inplay hidden" id="play-controls">
+          <div class="play-row">
+            <button id="btn-hit" class="btn">Hit (H)</button>
+            <button id="btn-stand" class="btn">Stand (Space)</button>
+            <button id="btn-double" class="btn">Double (D)</button>
+            <button id="btn-rebet" class="btn">Rebet</button>
+            <button id="btn-newround" class="btn primary">New Round (N)</button>
+          </div>
+        </div>
+      </section>
+
+      <footer class="footnote">Keyboard: H hit • Space stand • D double • N new • S sound • T theme</footer>
+    </main>
+  </div>
+
+  <dialog id="howto">
+    <h3>How to play Blackjack</h3>
+    <p>Get closer to 21 than the dealer without going over. Aces count 1 or 11. Faces are 10. Blackjack pays 3:2.</p>
+    <ul>
+      <li>Click chips to place your bet, then Deal.</li>
+      <li>Hit to take a card. Stand to hold. Double takes one card and doubles the stake.</li>
+      <li>Dealer draws to 17 and stands on all 17s.</li>
+    </ul>
+    <form method="dialog"><button class="btn primary">Got it</button></form>
+  </dialog>
+
+  <audio id="sfx-card" preload="auto" src="data:audio/mp3;base64,//uQZAAAAAAAAAAAAAAAAAAAA"></audio>
+  <audio id="sfx-chip" preload="auto" src="data:audio/mp3;base64,//uQZAAAAAAAAAAAAAAAAAAAA"></audio>
+  <audio id="sfx-win"  preload="auto" src="data:audio/mp3;base64,//uQZAAAAAAAAAAAAAAAAAAAA"></audio>
+
+  <script src="./app.js" type="module"></script>
+</body>
+</html>
