@@ -326,6 +326,7 @@
     if (bank < n) {
       bank += 500;
       message(`The kitchen refilled you to ${bank} flapjacks.`);
+
     }
     bank -= n;
     bet += n;

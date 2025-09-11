@@ -3,10 +3,12 @@
 A browser blackjack table built to practice state management, DOM rendering and tiny audio effects without any frameworks. Drop the folder on a web server or open `index.html` directly and you can deal.
 
 ## System architecture
-- **State container** – one object tracks the shoe, both hands, flapjack stash, current bet and round number.
+
+
+- **State container** – one object tracks the shoe, both hands, the current bet and bankroll.
 - **Rendering pipeline** – `render()` rebuilds the table from state. `cardEl()` draws full playing cards with corners, pips and backs.
 - **Game flow** – button and keyboard listeners drive dealing, hitting, standing and doubling. A simple state machine guards illegal moves.
-- **Flapjack stash** – wagers come off your stack. If you run dry the kitchen automatically tops you back up so play never stalls.
+- **Bankroll logic** – wagers come off the bank. If you run dry the house automatically tops you back up so play never stalls.
 - **Audio/animation** – the Web Audio API synthesises clicks and win/lose tones. CSS keyframes slide cards into place and buttons brighten on hover.
 
 ## Features
