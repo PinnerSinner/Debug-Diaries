@@ -1,21 +1,18 @@
-# Debug Diaries Blackjack
+# Flapjack Blackjack
 
-A browser blackjack table built to practice state management, DOM rendering and tiny audio effects without any frameworks. Drop the folder on a web server or open `index.html` directly and you can deal.
+I turned a lazy weekend experiment into a breakfast‑themed blackjack table. It runs in the browser using plain HTML, CSS and JavaScript—no frameworks, just cards, a bit of sound, and a whole lot of flapjacks.
 
-## System architecture
-
-- **State container** – one object tracks the shoe, both hands, flapjack stash, current bet and round number.
-- **Rendering pipeline** – `render()` rebuilds the table from state. `cardEl()` draws full playing cards with corners, pips and backs. A centered status overlay calls out wins and losses.
-- **Game flow** – button and keyboard listeners drive dealing, hitting, standing and doubling. A simple state machine guards illegal moves.
-- **Flapjack stash** – wagers come off your stack. If you run dry the kitchen automatically tops you back up so play never stalls.
-- **Audio/animation** – the Web Audio API synthesises clicks and win/lose tones. CSS keyframes slide cards into place and buttons brighten on hover. Deal arrives via a large syrup-coloured button and chip bets use pancake‑styled tokens.
+Play it here: https://pinnersinner.github.io/Debug-Diaries/activities/blackjack-game
 
 ## Features
-- Six‑deck shoe with aces counting as 1 or 11; dealer stands on all 17s.
-- Side‑by‑side dealer and player hands with round indicator for clarity.
-- Mobile‑friendly layout with oversized circular Deal button and bold Stand button.
-- Bet flapjacks instead of cash. Double down, clear bet and keyboard shortcuts: **Space** to deal, **H** hit, **S** stand, **D** double, **C** clear, **B** bet 10 flapjacks.
-- Shuffle the shoe at any time and toggle sound, music and keyboard input.
+- Dealer and player hands sit side by side so you can see who’s ahead at a glance.
+- A big amber **Deal** button and chunky **Stand** button keep things thumb‑friendly on phones.
+- You bet flapjacks instead of cash, and the stash quietly refills if you ever run out.
+- Keyboard shortcuts: **Space** to deal, **H** hit, **S** stand, **D** double, **C** clear, **B** bet ten flapjacks.
 
-## Development notes
-Everything is plain HTML, CSS and vanilla JavaScript. No build step or dependencies are required.
+## What I tinkered with
+- A tiny state object to track the shoe, hands and wagers.
+- Rendering full playing cards and sliding them in with CSS keyframes.
+- Little click and win/lose tones built with the Web Audio API.
+
+Open `index.html` directly or serve the folder to start a round.
