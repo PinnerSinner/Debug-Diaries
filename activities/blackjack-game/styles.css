@@ -205,34 +205,52 @@ body {
 .peek {
   position: absolute;
   top: 20px;
-  right: 20px;
-  background: rgba(15,23,42,0.8);
-  padding: 12px;
+  left: 100%;
+  margin-left: 20px;
+  background: rgba(15,23,42,0.9);
+  padding: 16px;
+
   border: 2px solid #0f172a;
   border-radius: 8px;
   box-shadow: 0 4px 12px var(--shadow);
   display: none;
+  min-width: 200px;
+
 }
 .peek.show { display: block; }
 .peek-hands {
   display: flex;
-  gap: 16px;
+  gap: 24px;
 }
 .peek-cards {
   display: flex;
-  gap: 6px;
+  gap: 10px;
 }
 .peek-block strong {
   display: block;
-  margin-bottom: 4px;
+  margin-bottom: 6px;
   color: var(--gold);
   text-align: center;
+  font-size: 16px;
 }
 .peek .card {
-  width: 40px;
-  height: 56px;
-  border-radius: 6px;
+  width: 60px;
+  height: 84px;
+  border-radius: 8px;
   box-shadow: 0 2px 6px var(--shadow);
+}
+.peek h3 {
+  margin-top: 0;
+  margin-bottom: 8px;
+  text-align: center;
+  color: var(--gold);
+}
+@media (max-width: 800px) {
+  .peek {
+    position: static;
+    margin: 16px auto 0;
+  }
+
 }
 
 /* Button styling */
@@ -268,6 +286,14 @@ button.huge {
 button.alt {
   background: #0f172a;
 }
+.stand-btn {
+  font-size: 18px;
+  line-height: 1.2;
+  white-space: normal;
+}
+.hit-btn {
+  font-size: 22px;
+}
 .chip {
   width: 60px;
   height: 60px;
@@ -291,9 +317,9 @@ button.alt {
   flex: 0 0 100px;
   align-self: center;
 }
-#hit { background: #3b82f6; }
-#stand { background: #ef4444; }
-#double { background: #b45309; }
+#hit { background: linear-gradient(#fde68a, #f59e0b); color: #78350f; }
+#stand { background: linear-gradient(#fca5a5, #dc2626); }
+
 #clear-bet { background: #64748b; }
 
 /* Overlay status message */
@@ -327,5 +353,22 @@ button.alt {
   .card {
     width: 72px;
     height: 100px;
+  }
+}
+
+/* Confetti for win celebrations */
+.confetti {
+  position: fixed;
+  top: -10px;
+  width: 8px;
+  height: 8px;
+  opacity: 0.9;
+  animation: confetti-fall 1.5s linear forwards;
+  z-index: 1000;
+}
+@keyframes confetti-fall {
+  to {
+    transform: translateY(110vh) rotate(720deg);
+    opacity: 0;
   }
 }

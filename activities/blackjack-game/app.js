@@ -1,7 +1,7 @@
 // Flapjack Blackjack Game Logic
 //
 // This script powers the Flapjack Blackjack UI. It implements a six-deck shoe,
-// betting with flapjacks, hit/stand/double mechanics, automatic stash top-up
+// betting with flapjacks, hit/stand mechanics, automatic stash top-up
 // and optional keyboard shortcuts. All audio effects are synthesised on the fly
 
 // using the Web Audio API, so no external sound files are required.
@@ -21,6 +21,7 @@
     deal:  { freq: 600,  duration: 0.15 },
     flip:  { freq: 800,  duration: 0.15 },
     bet:   { freq: 1200, duration: 0.2 },
+    hit:   { freq: 1800, duration: 0.07, type: 'square' },
     win:   { freq: 1500, duration: 0.35 },
     lose:  { freq: 300,  duration: 0.35 },
     push:  { freq: 900,  duration: 0.25 }
@@ -31,6 +32,7 @@
     if (!sfxEnabled || !toneMap[key]) return;
     const cfg = toneMap[key];
     const osc = audioCtx.createOscillator();
+    if (cfg.type) osc.type = cfg.type;
     const gain = audioCtx.createGain();
     osc.frequency.value = cfg.freq;
     gain.gain.setValueAtTime(0, audioCtx.currentTime);
@@ -54,7 +56,6 @@
     deal: document.getElementById('deal'),
     hit: document.getElementById('hit'),
     stand: document.getElementById('stand'),
-    double: document.getElementById('double'),
     clear: document.getElementById('clear-bet'),
     chips: Array.from(document.querySelectorAll('.chip')),
     sfxToggle: document.getElementById('sfx-toggle'),
@@ -185,7 +186,6 @@
     els.round.textContent = round;
     els.hit.disabled = !inRound;
     els.stand.disabled = !inRound;
-    els.double.disabled = !inRound || bank < bet;
     els.deal.disabled = inRound || bet <= 0;
     els.clear.disabled = inRound || bet <= 0;
   }
@@ -212,6 +212,19 @@
     els.peek.classList.remove('show');
     els.peekPlayer.innerHTML = '';
     els.peekDealer.innerHTML = '';
+  }
+
+  // Simple confetti burst when the player wins
+  function launchConfetti() {
+    const colors = ['#fbbf24','#f87171','#60a5fa','#34d399','#c084fc'];
+    for (let i = 0; i < 40; i++) {
+      const piece = document.createElement('div');
+      piece.className = 'confetti';
+      piece.style.left = Math.random() * 100 + '%';
+      piece.style.background = colors[i % colors.length];
+      document.body.appendChild(piece);
+      setTimeout(() => piece.remove(), 1600);
+    }
 
   }
   // Settle bets and update bankroll
@@ -230,11 +243,13 @@
       message(`Blackjack! You earn ${winAmt} flapjacks.`, 'win');
 
       play('win');
+      launchConfetti();
     } else {
       if (outcome === 'win') {
         bank += bet * 2;
         message(`You win ${bet} flapjacks.`, 'win');
         play('win');
+        launchConfetti();
       } else if (outcome === 'lose') {
         message(`You lose ${bet} flapjacks.`, 'lose');
 
@@ -314,6 +329,7 @@
           bet = 0;
           inRound = false;
           play('win');
+          launchConfetti();
           render();
           return;
         }
@@ -354,6 +370,7 @@
   els.deal.addEventListener('click', () => { play('click'); startRound(); });
   els.hit.addEventListener('click', () => {
     if (!inRound) return;
+    play('hit');
     drawCard('player');
     if (isBust(playerHand)) {
       message('Bust.', 'lose');
@@ -365,24 +382,8 @@
   });
   els.stand.addEventListener('click', () => {
     if (!inRound) return;
-    message('Dealer’s turn.', 'info');
+    message("That's quite enough for me thank you, I'm full 🥞 Yum yum. Dealer’s turn.", 'info');
     dealerPlay();
-  });
-  els.double.addEventListener('click', () => {
-    if (!inRound) return;
-    bank -= bet;
-    bet *= 2;
-    render();
-    drawCard('player');
-    if (isBust(playerHand)) {
-      message('Double and bust.', 'lose');
-      setTimeout(() => {
-        flipDealerHole();
-        settle();
-      }, 400);
-    } else {
-      dealerPlay();
-    }
   });
   els.clear.addEventListener('click', clearBet);
 
@@ -401,7 +402,6 @@
     if (k === ' ') { e.preventDefault(); if (!inRound) els.deal.click(); }
     if (k === 'h') els.hit.click();
     if (k === 's') els.stand.click();
-    if (k === 'd') els.double.click();
     if (k === 'c') els.clear.click();
     if (k === 'b') addBet(10);
   });
