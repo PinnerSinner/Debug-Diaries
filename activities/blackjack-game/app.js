@@ -3,6 +3,7 @@
 // This script powers the Flapjack Blackjack UI. It implements a six-deck shoe,
 // betting with flapjacks, hit/stand/double mechanics, automatic stash top-up
 // and optional keyboard shortcuts. All audio effects are synthesised on the fly
+
 // using the Web Audio API, so no external sound files are required.
 
 (function() {
@@ -211,6 +212,7 @@
     els.peek.classList.remove('show');
     els.peekPlayer.innerHTML = '';
     els.peekDealer.innerHTML = '';
+
   }
   // Settle bets and update bankroll
   function settle() {
@@ -226,6 +228,7 @@
       const winAmt = Math.floor(bet * 1.5);
       bank += bet + winAmt;
       message(`Blackjack! You earn ${winAmt} flapjacks.`, 'win');
+
       play('win');
     } else {
       if (outcome === 'win') {
@@ -234,6 +237,7 @@
         play('win');
       } else if (outcome === 'lose') {
         message(`You lose ${bet} flapjacks.`, 'lose');
+
         play('lose');
       } else {
         bank += bet;
@@ -247,6 +251,7 @@
     if (bank <= 0) {
       bank = 500;
       message(`The kitchen refilled you to ${bank} flapjacks. Keep going.`, 'info');
+
     }
     round++;
     render();
@@ -277,6 +282,7 @@
     }
     if (shoe.length < 30) {
       shoe = createShoe(6);
+
     }
     inRound = true;
     playerHand = [];
@@ -329,6 +335,7 @@
     if (bank < n) {
       bank += 500;
       message(`The kitchen refilled you to ${bank} flapjacks.`, 'info');
+
     }
     bank -= n;
     bet += n;
@@ -378,6 +385,7 @@
     }
   });
   els.clear.addEventListener('click', clearBet);
+
   els.chips.forEach(c => c.addEventListener('click', () => addBet(Number(c.dataset.amt))));
   // Toggles
   els.sfxToggle.addEventListener('change', e => {
