@@ -47,15 +47,12 @@ body {
 .table {
   max-width: 1100px;
   margin: 24px auto;
-  padding: 0 16px;
+  padding: 24px 16px;
   position: relative;
-}
-
-.hands {
-  display: flex;
-  gap: 20px;
-  justify-content: center;
-  flex-wrap: wrap;
+  background: radial-gradient(circle at 50% 50%, var(--felt) 0%, var(--felt-dark) 100%);
+  border: 2px solid #063923;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px var(--shadow);
 
 }
 
@@ -95,7 +92,8 @@ body {
   height: 130px;
   border-radius: 10px;
   background: var(--card-bg);
-  box-shadow: 0 8px 20px var(--shadow);
+  border: 1px solid #d1d5db;
+  box-shadow: 0 4px 12px var(--shadow);
   position: relative;
   opacity: 0;
   transform: translateY(-20px) scale(0.8);
@@ -203,6 +201,40 @@ body {
   flex: 2 1 160px;
 }
 
+/* Peek window for upcoming cards */
+.peek {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: rgba(15,23,42,0.8);
+  padding: 12px;
+  border: 2px solid #0f172a;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px var(--shadow);
+  display: none;
+}
+.peek.show { display: block; }
+.peek-hands {
+  display: flex;
+  gap: 16px;
+}
+.peek-cards {
+  display: flex;
+  gap: 6px;
+}
+.peek-block strong {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--gold);
+  text-align: center;
+}
+.peek .card {
+  width: 40px;
+  height: 56px;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px var(--shadow);
+}
+
 /* Button styling */
 button {
   border: 0;
@@ -263,7 +295,6 @@ button.alt {
 #stand { background: #ef4444; }
 #double { background: #b45309; }
 #clear-bet { background: #64748b; }
-#new-shoe { background: #334155; }
 
 /* Overlay status message */
 .status {

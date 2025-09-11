@@ -1,19 +1,19 @@
 # Flapjack Blackjack
 
-I turned a lazy weekend experiment into a breakfast‑themed blackjack table. It runs in the browser using plain HTML, CSS and JavaScript—no frameworks, just cards, a bit of sound, and a whole lot of flapjacks.
+Flapjack Blackjack is a breakfast‑themed take on twenty‑one built with plain HTML, CSS and JavaScript—no frameworks, just cards, a sprinkle of sound effects and a heap of flapjacks.
 
 Play it here: https://pinnersinner.github.io/Debug-Diaries/activities/blackjack-game
-<img width="2499" height="986" alt="image" src="https://github.com/user-attachments/assets/234786f0-faca-4bbe-9c9a-41bd82f5c857" />
 
 ## Features
-- Dealer and player hands sit side by side so you can see who’s ahead at a glance.
-- A big amber **Deal** button and chunky **Stand** button keep things thumb‑friendly on phones.
-- You bet flapjacks instead of cash, and the stash quietly refills if you ever run out.
+- Dealer and player hands sit side by side so you can compare them at a glance.
+- A big amber **Deal** button and chunky **Stand** button keep play thumb‑friendly on phones.
+- You bet flapjacks instead of cash, and the stash quietly refills if you run out.
+- After each round a peek window shows the next cards that would have been dealt to you and the dealer.
 - Keyboard shortcuts: **Space** to deal, **H** hit, **S** stand, **D** double, **C** clear, **B** bet ten flapjacks.
 
-## What I tinkered with
-- A tiny state object to track the shoe, hands and wagers.
-- Rendering full playing cards and sliding them in with CSS keyframes.
-- Little click and win/lose tones built with the Web Audio API.
+## Under the hood
+- A tiny state container tracks the shoe, hands, bankroll and round number.
+- A rendering pipeline builds full playing cards in the DOM and animates them with CSS keyframes and delays.
+- All sound effects are generated on the fly with the Web Audio API—there's no background music and no audio files.
 
-Open `index.html` directly or serve the folder to start a round.
+Open `index.html` directly or serve the folder to start a round of Flapjack Blackjack.
