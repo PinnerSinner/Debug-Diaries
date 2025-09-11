@@ -1,7 +1,7 @@
 // Debug Diaries Blackjack Game Logic
 //
 // This script powers the blackjack game UI. It implements a six-deck shoe,
-// betting with chips, hit/stand/double mechanics, automatic bankroll top-up
+// betting with flapjacks, hit/stand/double mechanics, automatic stash top-up
 // and optional keyboard shortcuts. All audio is synthesised on the fly
 // using the Web Audio API, so no external sound files are required.
 
@@ -68,6 +68,7 @@
     pScore: document.getElementById('player-score'),
     bank: document.getElementById('bank'),
     bet: document.getElementById('bet'),
+    round: document.getElementById('round'),
     msg: document.getElementById('message'),
     deal: document.getElementById('deal'),
     hit: document.getElementById('hit'),
@@ -87,6 +88,7 @@
   let dealerHand = [];
   let bank = 1000;
   let bet = 0;
+  let round = 1;
   let inRound = false;
 
   // Build a shuffled shoe with n decks
@@ -198,6 +200,7 @@
     els.pScore.textContent = pT.best;
     els.bank.textContent = bank;
     els.bet.textContent = bet;
+    els.round.textContent = round;
     els.hit.disabled = !inRound;
     els.stand.disabled = !inRound;
     els.double.disabled = !inRound || bank < bet;
@@ -220,15 +223,15 @@
     if (isBlackjack(playerHand) && !isBlackjack(dealerHand)) {
       const winAmt = Math.floor(bet * 1.5);
       bank += bet + winAmt;
-      message(`Blackjack! You win £${winAmt}.`);
+      message(`Blackjack! You earn ${winAmt} flapjacks.`);
       play('win');
     } else {
       if (outcome === 'win') {
         bank += bet * 2;
-        message(`You win £${bet}.`);
+        message(`You win ${bet} flapjacks.`);
         play('win');
       } else if (outcome === 'lose') {
-        message(`You lose £${bet}.`);
+        message(`You lose ${bet} flapjacks.`);
         play('lose');
       } else {
         bank += bet;
@@ -241,8 +244,9 @@
     // Top up when broke
     if (bank <= 0) {
       bank = 500;
-      message(`Topped you up to £${bank}. Keep going.`);
+      message(`The kitchen refilled you to ${bank} flapjacks. Keep going.`);
     }
+    round++;
     render();
   }
   function dealerPlay() {
@@ -321,7 +325,8 @@
     if (inRound) return;
     if (bank < n) {
       bank += 500;
-      message(`Topped you up to £${bank}.`);
+      message(`The kitchen refilled you to ${bank} flapjacks.`);
+
     }
     bank -= n;
     bet += n;

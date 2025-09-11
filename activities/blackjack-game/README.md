@@ -3,6 +3,8 @@
 A browser blackjack table built to practice state management, DOM rendering and tiny audio effects without any frameworks. Drop the folder on a web server or open `index.html` directly and you can deal.
 
 ## System architecture
+
+
 - **State container** – one object tracks the shoe, both hands, the current bet and bankroll.
 - **Rendering pipeline** – `render()` rebuilds the table from state. `cardEl()` draws full playing cards with corners, pips and backs.
 - **Game flow** – button and keyboard listeners drive dealing, hitting, standing and doubling. A simple state machine guards illegal moves.
@@ -11,8 +13,9 @@ A browser blackjack table built to practice state management, DOM rendering and 
 
 ## Features
 - Six‑deck shoe with aces counting as 1 or 11; dealer stands on all 17s.
-- Responsive layout and oversized action buttons for mobile play.
-- Double down, clear bet and keyboard shortcuts: **Space** to deal, **H** hit, **S** stand, **D** double, **C** clear, **B** bet £10.
+- Side‑by‑side dealer and player hands with round indicator for clarity.
+- Mobile‑friendly layout with oversized Deal and Stand buttons.
+- Bet flapjacks instead of cash. Double down, clear bet and keyboard shortcuts: **Space** to deal, **H** hit, **S** stand, **D** double, **C** clear, **B** bet 10 flapjacks.
 - Shuffle the shoe at any time and toggle sound, music and keyboard input.
 
 ## Development notes

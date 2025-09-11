@@ -37,32 +37,35 @@
     </header>
 
     <main class="table">
-      <!-- Dealer and player hands -->
-      <section class="hand dealer">
-        <h2>Dealer</h2>
-        <div class="cards" id="dealer-cards" aria-live="polite"></div>
-        <div class="score">Score: <span id="dealer-score">0</span></div>
-      </section>
-      <section class="hand player">
-        <h2>Player</h2>
-        <div class="cards" id="player-cards" aria-live="polite"></div>
-        <div class="score">Score: <span id="player-score">0</span></div>
-      </section>
+      <!-- Dealer and player hands side by side -->
+      <div class="hands">
+        <section class="hand dealer">
+          <h2>Dealer</h2>
+          <div class="cards" id="dealer-cards" aria-live="polite"></div>
+          <div class="score">Score: <span id="dealer-score">0</span></div>
+        </section>
+        <section class="hand player">
+          <h2>Player</h2>
+          <div class="cards" id="player-cards" aria-live="polite"></div>
+          <div class="score">Score: <span id="player-score">0</span></div>
+        </section>
+      </div>
 
       <!-- Betting controls -->
       <section class="betting">
-        <div class="bank">Bank: £<span id="bank">1000</span> &nbsp;•&nbsp; Bet: £<span id="bet">0</span></div>
+        <div class="round">Round: <span id="round">1</span></div>
+        <div class="bank">Flapjacks: <span id="bank">1000</span> &nbsp;•&nbsp; Bet: <span id="bet">0</span></div>
         <div class="chips">
-          <button class="chip" data-amt="10">£10</button>
-          <button class="chip" data-amt="25">£25</button>
-          <button class="chip" data-amt="50">£50</button>
-          <button class="chip" data-amt="100">£100</button>
+          <button class="chip" data-amt="10">🥞10</button>
+          <button class="chip" data-amt="25">🥞25</button>
+          <button class="chip" data-amt="50">🥞50</button>
+          <button class="chip" data-amt="100">🥞100</button>
           <button id="clear-bet" class="big alt">Clear</button>
         </div>
         <div class="actions">
           <button id="deal" class="huge">Deal</button>
+          <button id="stand" class="huge alt">Stand</button>
           <button id="hit" class="big">Hit</button>
-          <button id="stand" class="big alt">Stand</button>
           <button id="double" class="big">Double</button>
           <button id="new-shoe" class="alt">Shuffle</button>
         </div>
@@ -72,7 +75,7 @@
 
     <footer class="footer">
       <small>
-        Shortcuts (toggleable): Space to deal, H to hit, S to stand, D to double, C to clear, B to bet £10.
+        Shortcuts (toggleable): Space to deal, H to hit, S to stand, D to double, C to clear, B to bet 10 flapjacks.
       </small>
     </footer>
   </div>

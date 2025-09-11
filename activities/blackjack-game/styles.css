@@ -57,9 +57,17 @@ body {
   padding: 0 16px;
 }
 
+.hands {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
 /* Hand sections */
 .hand {
-  margin: 16px 0 22px;
+  flex: 1 1 300px;
+  margin: 0 0 22px;
 }
 .hand h2 {
   margin: 0 0 8px;
@@ -170,6 +178,9 @@ body {
 .betting {
   margin-top: 8px;
 }
+.round {
+  margin: 8px 0;
+}
 .bank {
   margin: 8px 0 12px;
 }
@@ -184,6 +195,10 @@ body {
 }
 .actions button {
   flex: 1 1 120px;
+}
+#deal,
+#stand {
+  flex: 2 1 160px;
 }
 
 /* Button styling */
