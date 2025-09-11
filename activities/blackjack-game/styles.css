@@ -1,53 +1,234 @@
-:root{
-  --bg:#0f1115; --panel:#141821; --panel-stroke:rgba(255,255,255,.08);
-  --felt:#0f4c3a; --card:#1a2130; --text:#f5f7fb; --muted:#9aa3b2;
-  --acc1:#ff7a18; --acc2:#2fd7ff; --good:#39d98a; --bad:#ff5c7c;
-  --r-xl:20px; --r-lg:16px; --r:12px; --shadow:0 10px 30px rgba(0,0,0,.45);
-}
-:root.theme-light{
-  --bg:#f6f7fb; --panel:#ffffff; --panel-stroke:rgba(0,0,0,.06);
-  --card:#ffffff; --text:#0b0e14; --muted:#5c667a; --shadow:0 8px 24px rgba(0,0,0,.08);
-}
-*{box-sizing:border-box}
-html,body{height:100%}
-body{
-  margin:0; font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; color:var(--text);
-  background: radial-gradient(1000px 500px at 70% -10%, rgba(255,122,24,.24), transparent 60%),
-              radial-gradient(800px 400px at 10% 0%, rgba(47,215,255,.18), transparent 55%),
-              var(--bg);
-}
-.app-shell{max-width:1100px;margin:0 auto;padding:24px;display:grid;gap:16px}
-.brandbar{display:flex;align-items:center;justify-content:space-between;background:var(--panel);border:1px solid var(--panel-stroke);border-radius:var(--r-xl);padding:12px 16px;box-shadow:var(--shadow)}
-.brand{display:flex;align-items:center;gap:10px;font-weight:800}
-.logo{width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,var(--acc1),#ffa858);display:grid;place-items:center;color:#111;font-weight:900}
-.actions{display:flex;gap:8px}
-.btn{border:1px solid var(--panel-stroke);background:rgba(255,255,255,.04);color:var(--text);padding:10px 14px;border-radius:12px;font-weight:700;cursor:pointer}
-.btn.primary{background:linear-gradient(135deg,var(--acc1),#ffa858);color:#111;border-color:transparent}
-.btn.ghost{background:transparent}
+/*
+  Stylesheet for Debug Diaries Blackjack
 
-.table{background:var(--panel);border:1px solid var(--panel-stroke);border-radius:var(--r-xl);padding:16px;box-shadow:var(--shadow)}
-.hud{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:8px}
-.panel{background:rgba(255,255,255,.02);border:1px solid var(--panel-stroke);border-radius:var(--r-lg);padding:12px 14px;display:grid;gap:6px}
-.panel span{color:var(--muted);font-size:12px;letter-spacing:.3px}
-.panel strong{font-size:20px}
+  The colour palette and layout are inspired by felt casino tables with
+  gold highlights. Buttons and cards are sized generously for touch
+  interactions and include subtle transitions. Responsive rules ensure
+  the game remains legible on mobile screens.
+*/
+:root {
+  --felt: #0b5d3b;
+  --felt-dark: #07422a;
+  --gold: #d4b160;
+  --ink: #0f172a;
+  --card-bg: #fff;
+  --shadow: rgba(0,0,0,0.3);
+}
 
-.felt{background:radial-gradient(800px 300px at 50% 0%, rgba(47,215,255,.12), transparent 60%), radial-gradient(800px 300px at 50% 100%, rgba(255,122,24,.10), transparent 60%), var(--felt);border:1px solid var(--panel-stroke);border-radius:var(--r-xl);padding:18px;display:grid;gap:18px}
-.hand{background:rgba(0,0,0,.18);border:1px solid var(--panel-stroke);border-radius:var(--r-lg);padding:12px}
-.label{color:var(--muted);font-size:12px;margin-bottom:8px}
-.cards{display:flex;gap:10px;min-height:124px;align-items:center;flex-wrap:wrap}
-.card{width:84px;height:120px;background:var(--card);border-radius:14px;border:1px solid var(--panel-stroke);box-shadow:var(--shadow);display:grid;grid-template-rows:1fr auto 1fr;align-items:center;justify-items:center;padding:8px;transform:translateY(10px) scale(.98);opacity:0;animation:rise .22s ease-out forwards}
-@keyframes rise{to{transform:translateY(0) scale(1);opacity:1}}
-.card .rank{font-size:26px;font-weight:800}
-.card .suit{font-size:22px}
-.card.red .rank,.card.red .suit{color:#ff6b6b}
-.card.back{background:repeating-linear-gradient(45deg,#1a2133,#1a2133 8px,#22304a 8px,#22304a 16px)}
+* {
+  box-sizing: border-box;
+}
 
-.total{margin-top:10px;font-weight:800;color:var(--acc2)}
-.controls{display:grid;gap:10px}
-.betting .chip-row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
-.chip{border:none;background:linear-gradient(180deg,#ffffff,#e6e6e6);color:#0b0e14;padding:10px 14px;border-radius:999px;font-weight:700;box-shadow:0 4px 0 #c8c8c8,var(--shadow);cursor:pointer;transition:transform .05s}
-.chip:active{transform:translateY(2px);box-shadow:0 2px 0 #c8c8c8,var(--shadow)}
-.bet-row,.play-row{display:flex;gap:10px;justify-content:center}
-.hidden{display:none}
-.footnote{color:var(--muted);font-size:12px;text-align:center}
-@media (max-width:900px){.hud{grid-template-columns:repeat(2,1fr)}.cards{min-height:100px}}
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  background: radial-gradient(circle at 50% -10%, var(--felt) 0%, var(--felt-dark) 60%, #031e12 100%) fixed;
+  color: #eef2ff;
+}
+
+/* Top bar with brand and toggles */
+.topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: linear-gradient(var(--felt), var(--felt-dark));
+  border-bottom: 1px solid #063923;
+}
+.brand {
+  font-weight: bold;
+  letter-spacing: 0.3px;
+}
+.controls {
+  display: flex;
+  gap: 12px;
+}
+.switch {
+  display: inline-flex;
+  gap: 6px;
+  align-items: center;
+  font-size: 0.9rem;
+}
+
+/* Main table layout */
+.table {
+  max-width: 1100px;
+  margin: 24px auto;
+  padding: 0 16px;
+}
+
+/* Hand sections */
+.hand {
+  margin: 16px 0 22px;
+}
+.hand h2 {
+  margin: 0 0 8px;
+  color: var(--gold);
+  font-weight: 600;
+}
+.score {
+  margin-top: 6px;
+  color: #c7d2fe;
+}
+
+/* Cards container */
+.cards {
+  display: flex;
+  gap: 14px;
+  min-height: 130px;
+  align-items: flex-start;
+}
+
+/* Individual card styling */
+.card {
+  width: 92px;
+  height: 130px;
+  border-radius: 10px;
+  background: var(--card-bg);
+  box-shadow: 0 8px 20px var(--shadow);
+  position: relative;
+  transform: translateY(-10px);
+  opacity: 0;
+  transition: transform 0.35s ease, opacity 0.35s ease;
+}
+.card.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+/* Card corners */
+.card .corner {
+  position: absolute;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 1;
+  color: #111;
+  padding: 8px;
+}
+.card.red .corner {
+  color: #b91c1c;
+}
+.card .corner.bottom {
+  right: 0;
+  bottom: 0;
+  transform: rotate(180deg);
+}
+
+/* Pip grid */
+.card .pips {
+  position: absolute;
+  inset: 32px 12px 12px 12px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 6px;
+  align-content: center;
+  justify-items: center;
+}
+.pip {
+  font-size: 22px;
+}
+
+/* Face card backgrounds */
+.card.face {
+  background: linear-gradient(135deg, #fafafa, #f1f5f9);
+}
+
+/* Back of a card */
+.card.back {
+  background: radial-gradient(circle at 30% 30%, #4c1d95, #1d4ed8 60%, #0a0a0a 100%);
+  position: relative;
+  overflow: hidden;
+}
+.card.back::after {
+  content: "DD";
+  position: absolute;
+  inset: 10px;
+  border: 2px solid rgba(255,255,255,0.6);
+  border-radius: 8px;
+  color: #fff;
+  font-weight: 800;
+  display: grid;
+  place-items: center;
+  font-size: 28px;
+  letter-spacing: 2px;
+  opacity: 0.9;
+}
+
+/* Betting UI */
+.betting {
+  margin-top: 8px;
+}
+.bank {
+  margin: 8px 0 12px;
+}
+.chips,
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+/* Button styling */
+button {
+  border: 0;
+  padding: 10px 14px;
+  border-radius: 12px;
+  cursor: pointer;
+  background: #1e293b;
+  color: #e2e8f0;
+  font-weight: 600;
+  box-shadow: 0 6px 14px var(--shadow);
+  transform: translateY(0);
+  transition: transform 0.05s ease, filter 0.2s ease;
+}
+button:active {
+  transform: translateY(2px);
+}
+button.big {
+  padding: 14px 18px;
+  font-size: 18px;
+  border-radius: 14px;
+}
+button.huge {
+  padding: 16px 24px;
+  font-size: 20px;
+  border-radius: 16px;
+}
+button.alt {
+  background: #0f172a;
+}
+.chip {
+  border-radius: 999px;
+  background: #a21caf;
+}
+/* Primary action colours */
+#deal { background: #22c55e; }
+#hit { background: #3b82f6; }
+#stand { background: #ef4444; }
+#double { background: #f59e0b; }
+#clear-bet { background: #64748b; }
+#new-shoe { background: #334155; }
+
+/* Message area */
+#message {
+  min-height: 28px;
+  font-weight: 600;
+  color: #fde68a;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+}
+
+/* Footer */
+.footer {
+  opacity: 0.8;
+  text-align: center;
+  margin: 24px 0 30px;
+}
+
+/* Responsive tweaks */
+@media (max-width: 600px) {
+  .card {
+    width: 72px;
+    height: 100px;
+  }
+}
