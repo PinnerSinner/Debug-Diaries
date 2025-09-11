@@ -11,4 +11,4 @@ This mini project creates secure random passwords in a Marcoverse themed card. C
 
 ## Screenshot
 
-![Random Password Generator preview](marcoverse-logo.svg)
+![Random Password Generator preview](marcoverse-logo.png)
