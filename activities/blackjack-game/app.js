@@ -382,7 +382,7 @@
   });
   els.stand.addEventListener('click', () => {
     if (!inRound) return;
-    message("That's quite enough for me thank you, I'm full 🥞 Yum yum. Dealer’s turn.", 'info');
+    message("Dealer’s turn.", 'info');
     dealerPlay();
   });
   els.clear.addEventListener('click', clearBet);
