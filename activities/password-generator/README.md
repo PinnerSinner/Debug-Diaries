@@ -9,6 +9,5 @@ This mini project creates secure random passwords in a Marcoverse themed card. C
 - Click any generated password to copy it to the clipboard.
 - Light and dark themes with a Marcoverse logo.
 
-## Screenshot
-
-![Random Password Generator preview](marcoverse-logo.png)
+<img width="611" height="921" alt="image" src="https://github.com/user-attachments/assets/f1d244cb-7c77-496d-bbd9-004123720d8d" />
+🔗 https://pinnersinner.github.io/Debug-Diaries/activities/password-generator
