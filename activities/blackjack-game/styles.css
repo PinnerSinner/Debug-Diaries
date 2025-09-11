@@ -55,11 +55,20 @@ body {
   max-width: 1100px;
   margin: 24px auto;
   padding: 0 16px;
+  position: relative;
+}
+
+.hands {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 /* Hand sections */
 .hand {
-  margin: 16px 0 22px;
+  flex: 1 1 300px;
+  margin: 0 0 22px;
 }
 .hand h2 {
   margin: 0 0 8px;
@@ -87,13 +96,22 @@ body {
   background: var(--card-bg);
   box-shadow: 0 8px 20px var(--shadow);
   position: relative;
-  transform: translateY(-10px);
   opacity: 0;
-  transition: transform 0.35s ease, opacity 0.35s ease;
+  transform: translateY(-20px) scale(0.8);
 }
 .card.show {
-  transform: translateY(0);
-  opacity: 1;
+  animation: deal 0.4s ease forwards;
+}
+
+@keyframes deal {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 /* Card corners */
@@ -106,6 +124,9 @@ body {
   padding: 8px;
 }
 .card.red .corner {
+  color: #b91c1c;
+}
+.card.red .pip {
   color: #b91c1c;
 }
 .card .corner.bottom {
@@ -158,22 +179,35 @@ body {
 .betting {
   margin-top: 8px;
 }
+.round {
+  margin: 8px 0;
+}
 .bank {
   margin: 8px 0 12px;
 }
+
 .chips,
 .actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 12px;
   margin-bottom: 10px;
+  justify-content: center;
+}
+.actions button {
+  flex: 1 1 120px;
+}
+#deal,
+#stand {
+  flex: 2 1 160px;
 }
 
 /* Button styling */
 button {
   border: 0;
-  padding: 10px 14px;
-  border-radius: 12px;
+  padding: 12px 18px;
+  min-width: 100px;
+  border-radius: 14px;
   cursor: pointer;
   background: #1e293b;
   color: #e2e8f0;
@@ -182,41 +216,71 @@ button {
   transform: translateY(0);
   transition: transform 0.05s ease, filter 0.2s ease;
 }
+button:hover {
+  filter: brightness(1.15);
+}
 button:active {
   transform: translateY(2px);
 }
 button.big {
-  padding: 14px 18px;
-  font-size: 18px;
-  border-radius: 14px;
-}
-button.huge {
-  padding: 16px 24px;
+  padding: 16px 22px;
   font-size: 20px;
   border-radius: 16px;
+}
+button.huge {
+  padding: 20px 28px;
+  font-size: 24px;
+  border-radius: 18px;
 }
 button.alt {
   background: #0f172a;
 }
 .chip {
-  border-radius: 999px;
-  background: #a21caf;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #fbbf24;
+  color: #78350f;
+  flex: 0 0 60px;
+  border: 3px solid #92400e;
+  padding: 0;
+  font-size: 18px;
 }
 /* Primary action colours */
-#deal { background: #22c55e; }
+#deal {
+  background: #f59e0b;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  padding: 0;
+  font-size: 24px;
+  flex: 0 0 100px;
+  align-self: center;
+}
 #hit { background: #3b82f6; }
 #stand { background: #ef4444; }
-#double { background: #f59e0b; }
+#double { background: #b45309; }
 #clear-bet { background: #64748b; }
 #new-shoe { background: #334155; }
 
-/* Message area */
-#message {
-  min-height: 28px;
-  font-weight: 600;
-  color: #fde68a;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+/* Overlay status message */
+.status {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 32px;
+  font-weight: 700;
+  text-align: center;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
+.status.show { opacity: 1; }
+.status.win { color: #22c55e; }
+.status.lose { color: #ef4444; }
+.status.push { color: #facc15; }
 
 /* Footer */
 .footer {

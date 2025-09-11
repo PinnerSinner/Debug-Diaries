@@ -1,7 +1,7 @@
 // Debug Diaries Blackjack Game Logic
 //
 // This script powers the blackjack game UI. It implements a six-deck shoe,
-// betting with chips, hit/stand/double mechanics, automatic bankroll top-up
+// betting with flapjacks, hit/stand/double mechanics, automatic stash top-up
 // and optional keyboard shortcuts. All audio is synthesised on the fly
 // using the Web Audio API, so no external sound files are required.
 
@@ -68,6 +68,7 @@
     pScore: document.getElementById('player-score'),
     bank: document.getElementById('bank'),
     bet: document.getElementById('bet'),
+    round: document.getElementById('round'),
     msg: document.getElementById('message'),
     deal: document.getElementById('deal'),
     hit: document.getElementById('hit'),
@@ -87,6 +88,7 @@
   let dealerHand = [];
   let bank = 1000;
   let bet = 0;
+  let round = 1;
   let inRound = false;
 
   // Build a shuffled shoe with n decks
@@ -184,12 +186,12 @@
     els.player.innerHTML = '';
     dealerHand.forEach((c,i) => {
       const el = cardEl(c);
-      el.style.transitionDelay = `${i * 60}ms`;
+      el.style.animationDelay = `${i * 60}ms`;
       els.dealer.appendChild(el);
     });
     playerHand.forEach((c,i) => {
       const el = cardEl(c);
-      el.style.transitionDelay = `${i * 60}ms`;
+      el.style.animationDelay = `${i * 60}ms`;
       els.player.appendChild(el);
     });
     const dT = handTotals(dealerHand);
@@ -198,14 +200,20 @@
     els.pScore.textContent = pT.best;
     els.bank.textContent = bank;
     els.bet.textContent = bet;
+    els.round.textContent = round;
     els.hit.disabled = !inRound;
     els.stand.disabled = !inRound;
     els.double.disabled = !inRound || bank < bet;
     els.deal.disabled = inRound || bet <= 0;
     els.clear.disabled = inRound || bet <= 0;
   }
-  function message(txt) {
+  function message(txt, type = 'info') {
     els.msg.textContent = txt;
+    if (txt) {
+      els.msg.className = `status show ${type}`;
+    } else {
+      els.msg.className = 'status';
+    }
   }
   // Settle bets and update bankroll
   function settle() {
@@ -220,19 +228,19 @@
     if (isBlackjack(playerHand) && !isBlackjack(dealerHand)) {
       const winAmt = Math.floor(bet * 1.5);
       bank += bet + winAmt;
-      message(`Blackjack! You win £${winAmt}.`);
+      message(`Blackjack! You earn ${winAmt} flapjacks.`, 'win');
       play('win');
     } else {
       if (outcome === 'win') {
         bank += bet * 2;
-        message(`You win £${bet}.`);
+        message(`You win ${bet} flapjacks.`, 'win');
         play('win');
       } else if (outcome === 'lose') {
-        message(`You lose £${bet}.`);
+        message(`You lose ${bet} flapjacks.`, 'lose');
         play('lose');
       } else {
         bank += bet;
-        message('Push. Bet returned.');
+        message('Push. Bet returned.', 'push');
         play('push');
       }
     }
@@ -241,8 +249,9 @@
     // Top up when broke
     if (bank <= 0) {
       bank = 500;
-      message(`Topped you up to £${bank}. Keep going.`);
+      message(`The kitchen refilled you to ${bank} flapjacks. Keep going.`, 'info');
     }
+    round++;
     render();
   }
   function dealerPlay() {
@@ -265,12 +274,12 @@
   function startRound() {
     if (inRound) return;
     if (bet <= 0) {
-      message('Place a bet first.');
+      message('Place a bet first.', 'info');
       return;
     }
     if (shoe.length < 30) {
       shoe = createShoe(6);
-      message('New shoe.');
+      message('New shoe.', 'info');
     }
     inRound = true;
     playerHand = [];
@@ -287,7 +296,7 @@
       if (pBJ || dBJ) {
         flipDealerHole();
         if (pBJ && dBJ) {
-          message('Both blackjack. Push.');
+          message('Both blackjack. Push.', 'push');
           bank += bet;
           bet = 0;
           inRound = false;
@@ -296,7 +305,7 @@
           return;
         }
         if (pBJ) {
-          message('Player blackjack!');
+          message('Player blackjack!', 'win');
           bank += Math.floor(bet * 2.5);
           bet = 0;
           inRound = false;
@@ -305,7 +314,7 @@
           return;
         }
         if (dBJ) {
-          message('Dealer blackjack.');
+          message('Dealer blackjack.', 'lose');
           bet = 0;
           inRound = false;
           play('lose');
@@ -319,17 +328,20 @@
   // Bet handling
   function addBet(n) {
     if (inRound) return;
+    if (bank < n) {
+      bank += 500;
+      message(`The kitchen refilled you to ${bank} flapjacks.`, 'info');
+    }
     bank -= n;
     bet += n;
     play('bet');
-    if (bank < 0) message('Running on house credit. Win it back.');
     render();
   }
   function clearBet() {
     if (inRound || bet <= 0) return;
     bank += bet;
     bet = 0;
-    message('Bet cleared.');
+    message('Bet cleared.', 'info');
     play('click');
     render();
   }
@@ -339,7 +351,7 @@
     if (!inRound) return;
     drawCard('player');
     if (isBust(playerHand)) {
-      message('Bust.');
+      message('Bust.', 'lose');
       setTimeout(() => {
         flipDealerHole();
         settle();
@@ -348,7 +360,7 @@
   });
   els.stand.addEventListener('click', () => {
     if (!inRound) return;
-    message('Dealer’s turn.');
+    message('Dealer’s turn.', 'info');
     dealerPlay();
   });
   els.double.addEventListener('click', () => {
@@ -358,7 +370,7 @@
     render();
     drawCard('player');
     if (isBust(playerHand)) {
-      message('Double and bust.');
+      message('Double and bust.', 'lose');
       setTimeout(() => {
         flipDealerHole();
         settle();
@@ -370,7 +382,7 @@
   els.clear.addEventListener('click', clearBet);
   els.newShoe.addEventListener('click', () => {
     shoe = createShoe(6);
-    message('Shuffled a fresh shoe.');
+    message('Shuffled a fresh shoe.', 'info');
     play('click');
   });
   els.chips.forEach(c => c.addEventListener('click', () => addBet(Number(c.dataset.amt))));
@@ -383,7 +395,7 @@
     sfxEnabled = e.target.checked;
   });
   els.keysToggle.addEventListener('change', () => {
-    message(els.keysToggle.checked ? 'Keyboard on.' : 'Keyboard off.');
+    message(els.keysToggle.checked ? 'Keyboard on.' : 'Keyboard off.', 'info');
   });
   // Keyboard handlers
   window.addEventListener('keydown', e => {
