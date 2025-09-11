@@ -184,12 +184,12 @@
     els.player.innerHTML = '';
     dealerHand.forEach((c,i) => {
       const el = cardEl(c);
-      el.style.transitionDelay = `${i * 60}ms`;
+      el.style.animationDelay = `${i * 60}ms`;
       els.dealer.appendChild(el);
     });
     playerHand.forEach((c,i) => {
       const el = cardEl(c);
-      el.style.transitionDelay = `${i * 60}ms`;
+      el.style.animationDelay = `${i * 60}ms`;
       els.player.appendChild(el);
     });
     const dT = handTotals(dealerHand);
@@ -319,10 +319,13 @@
   // Bet handling
   function addBet(n) {
     if (inRound) return;
+    if (bank < n) {
+      bank += 500;
+      message(`Topped you up to £${bank}.`);
+    }
     bank -= n;
     bet += n;
     play('bet');
-    if (bank < 0) message('Running on house credit. Win it back.');
     render();
   }
   function clearBet() {
