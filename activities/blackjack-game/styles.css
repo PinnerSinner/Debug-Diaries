@@ -1,11 +1,4 @@
-/*
-  Stylesheet for Debug Diaries Blackjack
 
-  The colour palette and layout are inspired by felt casino tables with
-  gold highlights. Buttons and cards are sized generously for touch
-  interactions and include subtle transitions. Responsive rules ensure
-  the game remains legible on mobile screens.
-*/
 :root {
   --felt: #0b5d3b;
   --felt-dark: #07422a;
@@ -56,6 +49,13 @@ body {
   margin: 24px auto;
   padding: 0 16px;
   position: relative;
+}
+
+.hands {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .hands {
@@ -245,6 +245,7 @@ button.alt {
   border: 3px solid #92400e;
   padding: 0;
   font-size: 18px;
+
 }
 /* Primary action colours */
 #deal {
