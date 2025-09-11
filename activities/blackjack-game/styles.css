@@ -1,5 +1,5 @@
 /*
-  Stylesheet for Debug Diaries Blackjack
+  Stylesheet for Flapjack Blackjack
 
   The colour palette and layout are inspired by felt casino tables with
   gold highlights. Buttons and cards are sized generously for touch
@@ -54,12 +54,25 @@ body {
 .table {
   max-width: 1100px;
   margin: 24px auto;
-  padding: 0 16px;
+  padding: 24px 16px;
+  position: relative;
+  background: radial-gradient(circle at 50% 50%, var(--felt) 0%, var(--felt-dark) 100%);
+  border: 2px solid #063923;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px var(--shadow);
+}
+
+.hands {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 /* Hand sections */
 .hand {
-  margin: 16px 0 22px;
+  flex: 1 1 300px;
+  margin: 0 0 22px;
 }
 .hand h2 {
   margin: 0 0 8px;
@@ -85,15 +98,25 @@ body {
   height: 130px;
   border-radius: 10px;
   background: var(--card-bg);
-  box-shadow: 0 8px 20px var(--shadow);
+  border: 1px solid #d1d5db;
+  box-shadow: 0 4px 12px var(--shadow);
   position: relative;
-  transform: translateY(-10px);
   opacity: 0;
-  transition: transform 0.35s ease, opacity 0.35s ease;
+  transform: translateY(-20px) scale(0.8);
 }
 .card.show {
-  transform: translateY(0);
-  opacity: 1;
+  animation: deal 0.4s ease forwards;
+}
+
+@keyframes deal {
+  from {
+    opacity: 0;
+    transform: translateY(-20px) scale(0.8);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 /* Card corners */
@@ -106,6 +129,9 @@ body {
   padding: 8px;
 }
 .card.red .corner {
+  color: #b91c1c;
+}
+.card.red .pip {
   color: #b91c1c;
 }
 .card .corner.bottom {
@@ -158,22 +184,84 @@ body {
 .betting {
   margin-top: 8px;
 }
+.round {
+  margin: 8px 0;
+}
 .bank {
   margin: 8px 0 12px;
 }
+
 .chips,
 .actions {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 12px;
   margin-bottom: 10px;
+  justify-content: center;
+}
+.actions button {
+  flex: 1 1 120px;
+}
+#deal,
+#stand {
+  flex: 2 1 160px;
+}
+
+/* Peek window for upcoming cards */
+.peek {
+  position: absolute;
+  top: 20px;
+  left: 100%;
+  margin-left: 20px;
+  background: rgba(15,23,42,0.9);
+  padding: 16px;
+  border: 2px solid #0f172a;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px var(--shadow);
+  display: none;
+  min-width: 200px;
+}
+.peek.show { display: block; }
+.peek-hands {
+  display: flex;
+  gap: 24px;
+}
+.peek-cards {
+  display: flex;
+  gap: 10px;
+}
+.peek-block strong {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--gold);
+  text-align: center;
+  font-size: 16px;
+}
+.peek .card {
+  width: 60px;
+  height: 84px;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px var(--shadow);
+}
+.peek h3 {
+  margin-top: 0;
+  margin-bottom: 8px;
+  text-align: center;
+  color: var(--gold);
+}
+@media (max-width: 800px) {
+  .peek {
+    position: static;
+    margin: 16px auto 0;
+  }
 }
 
 /* Button styling */
 button {
   border: 0;
-  padding: 10px 14px;
-  border-radius: 12px;
+  padding: 12px 18px;
+  min-width: 100px;
+  border-radius: 14px;
   cursor: pointer;
   background: #1e293b;
   color: #e2e8f0;
@@ -182,41 +270,77 @@ button {
   transform: translateY(0);
   transition: transform 0.05s ease, filter 0.2s ease;
 }
+button:hover {
+  filter: brightness(1.15);
+}
 button:active {
   transform: translateY(2px);
 }
 button.big {
-  padding: 14px 18px;
-  font-size: 18px;
-  border-radius: 14px;
-}
-button.huge {
-  padding: 16px 24px;
+  padding: 16px 22px;
   font-size: 20px;
   border-radius: 16px;
+}
+button.huge {
+  padding: 20px 28px;
+  font-size: 24px;
+  border-radius: 18px;
 }
 button.alt {
   background: #0f172a;
 }
+.stand-btn {
+  font-size: 18px;
+  line-height: 1.2;
+  white-space: normal;
+}
+.hit-btn {
+  font-size: 22px;
+}
 .chip {
-  border-radius: 999px;
-  background: #a21caf;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #fbbf24;
+  color: #78350f;
+  flex: 0 0 60px;
+  border: 3px solid #92400e;
+  padding: 0;
+  font-size: 18px;
 }
 /* Primary action colours */
-#deal { background: #22c55e; }
-#hit { background: #3b82f6; }
-#stand { background: #ef4444; }
-#double { background: #f59e0b; }
-#clear-bet { background: #64748b; }
-#new-shoe { background: #334155; }
-
-/* Message area */
-#message {
-  min-height: 28px;
-  font-weight: 600;
-  color: #fde68a;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+#deal {
+  background: #f59e0b;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  padding: 0;
+  font-size: 24px;
+  flex: 0 0 100px;
+  align-self: center;
 }
+#hit { background: linear-gradient(#fde68a, #f59e0b); color: #78350f; }
+#stand { background: linear-gradient(#fca5a5, #dc2626); }
+#clear-bet { background: #64748b; }
+
+/* Overlay status message */
+.status {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 32px;
+  font-weight: 700;
+  text-align: center;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.status.show { opacity: 1; }
+.status.win { color: #22c55e; }
+.status.lose { color: #ef4444; }
+.status.push { color: #facc15; }
 
 /* Footer */
 .footer {
@@ -230,5 +354,22 @@ button.alt {
   .card {
     width: 72px;
     height: 100px;
+  }
+}
+
+/* Confetti for win celebrations */
+.confetti {
+  position: fixed;
+  top: -10px;
+  width: 8px;
+  height: 8px;
+  opacity: 0.9;
+  animation: confetti-fall 1.5s linear forwards;
+  z-index: 1000;
+}
+@keyframes confetti-fall {
+  to {
+    transform: translateY(110vh) rotate(720deg);
+    opacity: 0;
   }
 }
