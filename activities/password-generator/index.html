@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Marcoverse Password Generator</title>
+  <link rel="stylesheet" href="index.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <main class="card">
+    <img src="marcoverse-logo.svg" alt="Marcoverse logo" class="logo">
+    <h1>Generate a <span>random password</span></h1>
+    <p class="tagline">Never use an insecure password again.</p>
+
+    <div class="controls">
+      <div class="control">
+        <label for="length">Length</label>
+        <input type="number" id="length" min="4" max="64" value="15">
+      </div>
+      <div class="control">
+        <label for="numbers">Include numbers</label>
+        <input type="checkbox" id="numbers" checked>
+      </div>
+      <div class="control">
+        <label for="symbols">Include symbols</label>
+        <input type="checkbox" id="symbols" checked>
+      </div>
+    </div>
+
+    <button id="generate" class="generate">Generate passwords</button>
+
+    <div class="passwords">
+      <button class="password-field" id="password-one" aria-label="First generated password"></button>
+      <button class="password-field" id="password-two" aria-label="Second generated password"></button>
+    </div>
+    <button id="theme-toggle" class="theme-toggle" aria-label="Toggle light/dark theme">Toggle theme</button>
+  </main>
+  <script src="index.js"></script>
+</body>
+</html>

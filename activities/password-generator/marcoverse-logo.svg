@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ff7a18"/>
+      <stop offset="100%" stop-color="#ff3d00"/>
+    </linearGradient>
+  </defs>
+  <rect x="5" y="5" width="190" height="190" rx="20" fill="url(#grad)" stroke="#000" stroke-width="5"/>
+  <text x="100" y="70" text-anchor="middle" font-family="Arial, sans-serif" font-size="20" font-weight="bold" fill="#000">MARCOVERSE</text>
+  <path d="M70 100c0-17 13-30 30-30 12 0 23 7 27 18 13 1 23 12 23 25 0 14-11 25-25 25H70c-11 0-20-9-20-20 0-11 9-20 20-20z" fill="none" stroke="#000" stroke-width="5"/>
+  <g stroke="#000" stroke-width="5" fill="none">
+    <line x1="80" y1="115" x2="80" y2="145"/>
+    <circle cx="80" cy="150" r="5" fill="#000"/>
+    <line x1="100" y1="125" x2="100" y2="155"/>
+    <circle cx="100" cy="160" r="5" fill="#000"/>
+    <line x1="120" y1="115" x2="120" y2="145"/>
+    <circle cx="120" cy="150" r="5" fill="#000"/>
+  </g>
+</svg>
