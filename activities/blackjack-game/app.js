@@ -207,8 +207,13 @@
     els.deal.disabled = inRound || bet <= 0;
     els.clear.disabled = inRound || bet <= 0;
   }
-  function message(txt) {
+  function message(txt, type = 'info') {
     els.msg.textContent = txt;
+    if (txt) {
+      els.msg.className = `status show ${type}`;
+    } else {
+      els.msg.className = 'status';
+    }
   }
   // Settle bets and update bankroll
   function settle() {
@@ -223,19 +228,21 @@
     if (isBlackjack(playerHand) && !isBlackjack(dealerHand)) {
       const winAmt = Math.floor(bet * 1.5);
       bank += bet + winAmt;
-      message(`Blackjack! You earn ${winAmt} flapjacks.`);
+      message(`Blackjack! You earn ${winAmt} flapjacks.`, 'win');
+
       play('win');
     } else {
       if (outcome === 'win') {
         bank += bet * 2;
-        message(`You win ${bet} flapjacks.`);
+        message(`You win ${bet} flapjacks.`, 'win');
         play('win');
       } else if (outcome === 'lose') {
-        message(`You lose ${bet} flapjacks.`);
+        message(`You lose ${bet} flapjacks.`, 'lose');
+
         play('lose');
       } else {
         bank += bet;
-        message('Push. Bet returned.');
+        message('Push. Bet returned.', 'push');
         play('push');
       }
     }
@@ -244,7 +251,8 @@
     // Top up when broke
     if (bank <= 0) {
       bank = 500;
-      message(`The kitchen refilled you to ${bank} flapjacks. Keep going.`);
+      message(`The kitchen refilled you to ${bank} flapjacks. Keep going.`, 'info');
+
     }
     round++;
     render();
@@ -269,12 +277,12 @@
   function startRound() {
     if (inRound) return;
     if (bet <= 0) {
-      message('Place a bet first.');
+      message('Place a bet first.', 'info');
       return;
     }
     if (shoe.length < 30) {
       shoe = createShoe(6);
-      message('New shoe.');
+      message('New shoe.', 'info');
     }
     inRound = true;
     playerHand = [];
@@ -291,7 +299,7 @@
       if (pBJ || dBJ) {
         flipDealerHole();
         if (pBJ && dBJ) {
-          message('Both blackjack. Push.');
+          message('Both blackjack. Push.', 'push');
           bank += bet;
           bet = 0;
           inRound = false;
@@ -300,7 +308,7 @@
           return;
         }
         if (pBJ) {
-          message('Player blackjack!');
+          message('Player blackjack!', 'win');
           bank += Math.floor(bet * 2.5);
           bet = 0;
           inRound = false;
@@ -309,7 +317,7 @@
           return;
         }
         if (dBJ) {
-          message('Dealer blackjack.');
+          message('Dealer blackjack.', 'lose');
           bet = 0;
           inRound = false;
           play('lose');
@@ -325,7 +333,7 @@
     if (inRound) return;
     if (bank < n) {
       bank += 500;
-      message(`The kitchen refilled you to ${bank} flapjacks.`);
+      message(`The kitchen refilled you to ${bank} flapjacks.`, 'info');
 
     }
     bank -= n;
@@ -337,7 +345,7 @@
     if (inRound || bet <= 0) return;
     bank += bet;
     bet = 0;
-    message('Bet cleared.');
+    message('Bet cleared.', 'info');
     play('click');
     render();
   }
@@ -347,7 +355,7 @@
     if (!inRound) return;
     drawCard('player');
     if (isBust(playerHand)) {
-      message('Bust.');
+      message('Bust.', 'lose');
       setTimeout(() => {
         flipDealerHole();
         settle();
@@ -356,7 +364,7 @@
   });
   els.stand.addEventListener('click', () => {
     if (!inRound) return;
-    message('Dealer’s turn.');
+    message('Dealer’s turn.', 'info');
     dealerPlay();
   });
   els.double.addEventListener('click', () => {
@@ -366,7 +374,7 @@
     render();
     drawCard('player');
     if (isBust(playerHand)) {
-      message('Double and bust.');
+      message('Double and bust.', 'lose');
       setTimeout(() => {
         flipDealerHole();
         settle();
@@ -378,7 +386,7 @@
   els.clear.addEventListener('click', clearBet);
   els.newShoe.addEventListener('click', () => {
     shoe = createShoe(6);
-    message('Shuffled a fresh shoe.');
+    message('Shuffled a fresh shoe.', 'info');
     play('click');
   });
   els.chips.forEach(c => c.addEventListener('click', () => addBet(Number(c.dataset.amt))));
@@ -391,7 +399,7 @@
     sfxEnabled = e.target.checked;
   });
   els.keysToggle.addEventListener('change', () => {
-    message(els.keysToggle.checked ? 'Keyboard on.' : 'Keyboard off.');
+    message(els.keysToggle.checked ? 'Keyboard on.' : 'Keyboard off.', 'info');
   });
   // Keyboard handlers
   window.addEventListener('keydown', e => {

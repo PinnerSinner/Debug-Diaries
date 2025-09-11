@@ -1,11 +1,4 @@
-/*
-  Stylesheet for Debug Diaries Blackjack
 
-  The colour palette and layout are inspired by felt casino tables with
-  gold highlights. Buttons and cards are sized generously for touch
-  interactions and include subtle transitions. Responsive rules ensure
-  the game remains legible on mobile screens.
-*/
 :root {
   --felt: #0b5d3b;
   --felt-dark: #07422a;
@@ -55,6 +48,14 @@ body {
   max-width: 1100px;
   margin: 24px auto;
   padding: 0 16px;
+  position: relative;
+}
+
+.hands {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .hands {
@@ -235,25 +236,52 @@ button.alt {
   background: #0f172a;
 }
 .chip {
-  border-radius: 999px;
-  background: #a21caf;
-  flex: 1 1 100px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #fbbf24;
+  color: #78350f;
+  flex: 0 0 60px;
+  border: 3px solid #92400e;
+  padding: 0;
+  font-size: 18px;
+
 }
 /* Primary action colours */
-#deal { background: #22c55e; }
+#deal {
+  background: #f59e0b;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  padding: 0;
+  font-size: 24px;
+  flex: 0 0 100px;
+  align-self: center;
+}
 #hit { background: #3b82f6; }
 #stand { background: #ef4444; }
-#double { background: #f59e0b; }
+#double { background: #b45309; }
 #clear-bet { background: #64748b; }
 #new-shoe { background: #334155; }
 
-/* Message area */
-#message {
-  min-height: 28px;
-  font-weight: 600;
-  color: #fde68a;
-  text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+/* Overlay status message */
+.status {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 32px;
+  font-weight: 700;
+  text-align: center;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.6);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
+.status.show { opacity: 1; }
+.status.win { color: #22c55e; }
+.status.lose { color: #ef4444; }
+.status.push { color: #facc15; }
 
 /* Footer */
 .footer {

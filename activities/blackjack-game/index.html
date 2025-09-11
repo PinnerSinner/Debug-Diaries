@@ -1,11 +1,4 @@
-<!--
-  Debug Diaries Blackjack Game
 
-  This version modernises the original activity with a clean UI, proper
-  playing-card styling, responsive buttons and accessibility improvements.
-  All audio assets (sound effects and lobby music) are inlined as data URIs
-  via the accompanying JavaScript file. No external sound files are needed.
--->
 <!doctype html>
 <html lang="en">
 <head>
@@ -19,7 +12,7 @@
 <body>
   <div class="app">
     <header class="topbar">
-      <div class="brand">Debug&nbsp;Diaries&nbsp;Casino</div>
+      <div class="brand">Debug&nbsp;Diaries&nbsp;Flapjack&nbsp;Parlor</div>
       <div class="controls">
         <label class="switch">
           <input id="music-toggle" type="checkbox">
@@ -37,6 +30,8 @@
     </header>
 
     <main class="table">
+      <div id="message" class="status show info" role="status" aria-live="polite">Please place your bet</div>
+
       <!-- Dealer and player hands side by side -->
       <div class="hands">
         <section class="hand dealer">
@@ -69,7 +64,6 @@
           <button id="double" class="big">Double</button>
           <button id="new-shoe" class="alt">Shuffle</button>
         </div>
-        <div id="message" role="status" aria-live="polite"></div>
       </section>
     </main>
 

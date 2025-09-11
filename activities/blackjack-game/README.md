@@ -4,17 +4,16 @@ A browser blackjack table built to practice state management, DOM rendering and 
 
 ## System architecture
 
-
-- **State container** – one object tracks the shoe, both hands, the current bet and bankroll.
-- **Rendering pipeline** – `render()` rebuilds the table from state. `cardEl()` draws full playing cards with corners, pips and backs.
+- **State container** – one object tracks the shoe, both hands, flapjack stash, current bet and round number.
+- **Rendering pipeline** – `render()` rebuilds the table from state. `cardEl()` draws full playing cards with corners, pips and backs. A centered status overlay calls out wins and losses.
 - **Game flow** – button and keyboard listeners drive dealing, hitting, standing and doubling. A simple state machine guards illegal moves.
-- **Bankroll logic** – wagers come off the bank. If you run dry the house automatically tops you back up so play never stalls.
-- **Audio/animation** – the Web Audio API synthesises clicks and win/lose tones. CSS keyframes slide cards into place and buttons brighten on hover.
+- **Flapjack stash** – wagers come off your stack. If you run dry the kitchen automatically tops you back up so play never stalls.
+- **Audio/animation** – the Web Audio API synthesises clicks and win/lose tones. CSS keyframes slide cards into place and buttons brighten on hover. Deal arrives via a large syrup-coloured button and chip bets use pancake‑styled tokens.
 
 ## Features
 - Six‑deck shoe with aces counting as 1 or 11; dealer stands on all 17s.
 - Side‑by‑side dealer and player hands with round indicator for clarity.
-- Mobile‑friendly layout with oversized Deal and Stand buttons.
+- Mobile‑friendly layout with oversized circular Deal button and bold Stand button.
 - Bet flapjacks instead of cash. Double down, clear bet and keyboard shortcuts: **Space** to deal, **H** hit, **S** stand, **D** double, **C** clear, **B** bet 10 flapjacks.
 - Shuffle the shoe at any time and toggle sound, music and keyboard input.
 
